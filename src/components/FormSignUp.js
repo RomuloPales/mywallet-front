@@ -7,7 +7,7 @@ export default function FormSignUp() {
       <Input type="email" placeholder="E-mail"></Input>
       <Input type="password" placeholder="Senha"></Input>
       <Input type="password" placeholder="Confirme a senha"></Input>
-      <Button>Entrar</Button>
+      <Button>Cadastrar</Button>
       <Link to="/">Já tem uma conta ? Entre agora!</Link>
     </Form>
   );
