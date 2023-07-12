@@ -1,12 +1,54 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import apiAuth from "../services/apiAuth";
+import { useContext, useState } from "react";
+import { userContext } from "../context/userContext";
+
 export default function FormSignIn() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const { setUser} = useContext(userContext);
+  const navigate = useNavigate();
+
+  function handleLogin(e) {
+    e.preventDefault();
+    apiAuth
+      .login(form)
+      .then((res) => {
+        const {token, name} = res.data;
+        setUser({token, name});
+        
+        // navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }
+  function handleForm(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
   return (
-    <Form>
-      <Input type="email" placeholder="E-mail"></Input>
-      <Input type="password" placeholder="Senha"></Input>
-      <Button>Entrar</Button>
-      <Link to="/sign-up">Primeira vez? Cadastre-se!</Link>
+    <Form onSubmit={handleLogin}>
+      <Input
+        name="email"
+        type="email"
+        placeholder="email"
+        value={form.email}
+        onChange={handleForm}
+      ></Input>
+      <Input
+        name="password"
+        type="password"
+        placeholder="Senha"
+        value={form.password}
+        onChange={handleForm}
+      ></Input>
+      <Button type="submit">Entrar</Button>
+      <span>
+        Primeira vez?
+        <Link to="/sign-up"> Cadastre-se!</Link>
+      </span>
     </Form>
   );
 }

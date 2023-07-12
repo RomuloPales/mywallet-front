@@ -1,14 +1,40 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import apiAuth from "../services/apiAuth";
+
 export default function FormSignUp() {
+  const [form, setForm] = useState({email: "", password: ""});
+  const navigate = useNavigate();
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    apiAuth
+      .login(form)
+      .then((res) => {
+        console.log(res.data );
+        // navigate("/");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+
+  }
+
   return (
-    <Form>
-      <Input type="text" placeholder="Nome"></Input>
-      <Input type="email" placeholder="E-mail"></Input>
-      <Input type="password" placeholder="Senha"></Input>
-      <Input type="password" placeholder="Confirme a senha"></Input>
+    <Form onSubmit={handleSignUp}>
+      <Input 
+      type="text"
+      placeholder="Nome" 
+      />
+      <Input type="email" placeholder="E-mail" />
+      <Input type="password" placeholder="Senha"/>
+      <Input type="password" placeholder="Confirme a senha"/>
       <Button>Cadastrar</Button>
-      <Link to="/">Já tem uma conta ? Entre agora!</Link>
+      <span>Já tem uma conta? 
+              <Link to="/"> Entre agora!</Link>
+      </span>
     </Form>
   );
 }

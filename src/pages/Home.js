@@ -40,7 +40,7 @@ export default function Home() {
         </ul>
         <article>
           <span>SALDO</span>
-          <span>R$ 50000</span>
+          <span>R$ 50000,88</span>
         </article>
       </TransactionList>
       <section>
@@ -48,7 +48,7 @@ export default function Home() {
           <IonIcon icon={addCircleOutline} />
           <span>Nova Entrada</span>
         </StyledLinkButton>
-        <StyledLinkButton to="/newOut">
+        <StyledLinkButton to="/newOutPut">
           <IonIcon icon={removeCircleOutline} />
           <span>Nova Saída</span>
         </StyledLinkButton>
@@ -101,6 +101,7 @@ const TransactionList = styled.article`
   ul li div span {
     color: #c6c6c6;
     margin-right: 0.7rem;
+    font-size: 16px;
   }
   ul li div span:nth-child(2) {
     color: #000000;
@@ -110,6 +111,7 @@ const TransactionList = styled.article`
     display: flex;
     justify-content: space-between;
     font-weight: 700;
+    font-size: 17px;
   }
   article > span:nth-child(2) {
     color: green;
