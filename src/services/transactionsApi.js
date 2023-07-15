@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Base_URL = "http://localhost:5000/transactions";
+const Base_URL = "https://mywallet-api-yiwq.onrender.com/transactions";
 
   function createConfig(token) {
     return {
