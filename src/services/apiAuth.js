@@ -7,11 +7,13 @@ function login(body) {
   return promise;
 }
 
-function cadastro(body) {
+function signUp(body) {
+  
   const promise = axios.post(`${Base_URL}/sign-up`, body);
+
   return promise;
 }
 
-const apiAuth = { login, cadastro };
+const apiAuth = { login, signUp };
 
 export default apiAuth;

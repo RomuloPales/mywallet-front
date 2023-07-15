@@ -1,13 +1,57 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import transactionsApi from "../services/transactionsApi";
+import { userContext } from "../context/userContext";
+import { useContext } from "react";
 
 export default function EntryValue() {
+  const [form, setForm] = useState({
+    value: "",
+    description: "",
+    type: "entrada",
+  });
+  const { user } = useContext(userContext);
+  const navigate = useNavigate();
+
+  function handleForm(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  function handreCreateTransaction(e) {
+    e.preventDefault();
+    const body = { ...form };
+    transactionsApi
+      .postTransactions(body, user.token)
+      .then((res) => {
+        setForm({ value: "", description: "" });
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }
   return (
     <NewEntryTransaction>
-      <Form>
+      <Form onSubmit={handreCreateTransaction} type="entrada">
         <Title> Nova Entrada</Title>
-        <Input type="value" placeholder="valor"></Input>
-        <Input type="text" placeholder="descrição"></Input>
-        <Button>Salvar Entrada</Button>
+        <Input
+          name="value"
+          type="text"
+          placeholder="valor"
+          value={form.value}
+          onChange={handleForm}
+        ></Input>
+        <Input
+          name="description"
+          type="text"
+          placeholder="descrição"
+          value={form.description}
+          onChange={handleForm}
+        ></Input>
+        <Button name="entrada" type="submit">
+          Salvar Entrada
+        </Button>
       </Form>
     </NewEntryTransaction>
   );

@@ -5,39 +5,77 @@ import { useState } from "react";
 import apiAuth from "../services/apiAuth";
 
 export default function FormSignUp() {
-  const [form, setForm] = useState({email: "", password: ""});
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    passwordConfirmation: ""
+  });
   const navigate = useNavigate();
+
+  function handleForm(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    apiAuth
-      .login(form)
-      .then((res) => {
-        console.log(res.data );
-        // navigate("/");
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
 
-  }
+    const { passwordConfirmation, ...formData } = form;
+
+    if (form.password === form.passwordConfirmation) {
+      apiAuth
+        .signUp(formData)
+        .then((res) => {
+          alert("Cadastro realizado com sucesso!")
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err.response.data);
+        });
+    } else {
+     alert("Senhas não correspondem!");
+    }
+  };
 
   return (
     <Form onSubmit={handleSignUp}>
-      <Input 
-      type="text"
-      placeholder="Nome" 
+      <Input
+        name="name"
+        type="text"
+        placeholder="Nome"
+        value={form.name}
+        onChange={handleForm}
       />
-      <Input type="email" placeholder="E-mail" />
-      <Input type="password" placeholder="Senha"/>
-      <Input type="password" placeholder="Confirme a senha"/>
-      <Button>Cadastrar</Button>
-      <span>Já tem uma conta? 
-              <Link to="/"> Entre agora!</Link>
+      <Input
+        name="email"
+        type="email"
+        placeholder="Email"
+        value={form.email}
+        onChange={handleForm}
+      />
+      <Input
+        name="password"
+        type="password"
+        placeholder="Senha"
+        value={form.password}
+        onChange={handleForm}
+      />
+      <Input
+        name="passwordConfirmation"
+        type="password"
+        placeholder="Confirme a senha"
+        value={form.passwordConfirmation}
+        onChange={handleForm}
+      />
+      <Button type="submit">Cadastrar</Button>
+      <span>
+        Já tem uma conta?
+        <Link to="/"> Entre agora!</Link>
       </span>
     </Form>
   );
 }
+
 
 const Form = styled.form`
   display: flex;

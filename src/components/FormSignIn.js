@@ -7,7 +7,8 @@ import { userContext } from "../context/userContext";
 
 export default function FormSignIn() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const { setUser} = useContext(userContext);
+  const { setUser } = useContext(userContext);
+  
   const navigate = useNavigate();
 
   function handleLogin(e) {
@@ -15,10 +16,10 @@ export default function FormSignIn() {
     apiAuth
       .login(form)
       .then((res) => {
-        const {token, name} = res.data;
-        setUser({token, name});
+        const { token, name } = res.data;
         
-        // navigate("/home");
+        setUser({ token, name });
+        navigate("/home");
       })
       .catch((err) => {
         console.log(err.response.data);
