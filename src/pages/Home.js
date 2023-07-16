@@ -13,7 +13,7 @@ import transactionsApi from "../services/transactionsApi";
 export default function Home() {
   const { user } = useContext(userContext);
   const [transactions, setTransactions] = useState([]);
-  // const [tipo, setTipo] = useState("entrada");
+  
 
   useEffect(() => {
     getTransactionsList();
