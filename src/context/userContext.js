@@ -9,12 +9,13 @@ export default function UserProvider({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const localUser = JSON.parse(localStorage.getItem("user"));
     if (localUser === null) {
       navigate("/");
     } else {
       navigate("/home");
     }
-  }, [localUser, navigate]);
+  }, []);
   return (
     <>
       <userContext.Provider value={{ user, setUser }}>

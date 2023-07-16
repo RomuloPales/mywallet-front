@@ -8,7 +8,7 @@ import { userContext } from "../context/userContext";
 export default function FormSignIn() {
   const [form, setForm] = useState({ email: "", password: "" });
   const { setUser } = useContext(userContext);
-  
+
   const navigate = useNavigate();
 
   function handleLogin(e) {
@@ -22,7 +22,11 @@ export default function FormSignIn() {
         navigate("/home");
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err.response);
+        const alerta = err.response.data;
+        if(alerta){
+        alert("Login ou senha incorretos")
+        } 
       });
   }
   function handleForm(e) {
