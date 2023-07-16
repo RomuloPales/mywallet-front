@@ -17,8 +17,8 @@ export default function FormSignIn() {
       .login(form)
       .then((res) => {
         const { token, name } = res.data;
-        
         setUser({ token, name });
+        localStorage.setItem("user", JSON.stringify({ token, name }));
         navigate("/home");
       })
       .catch((err) => {

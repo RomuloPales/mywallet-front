@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import { GlobalStyle } from "./globalStyles";
 import SigninPage from "./pages/SignInPage";
 import SignupPage from "./pages/SignUpPage";
 import Home from "./pages/Home";
 import EntryValue from "./pages/EntryValue.js";
 import OutsValue from "./pages/OutsValues.js";
-import { userContext } from "./context/userContext";
+import UserProvider from "./context/userContext";
 export default function App() {
-  const [user, setUser]= useState({})
+  
 
   return (
     <>
       <BrowserRouter>
-      <userContext.Provider value={{user, setUser}}>
+      <UserProvider>
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<SigninPage />}></Route>
@@ -22,7 +22,7 @@ export default function App() {
           <Route path="/newEntry" element={<EntryValue />}></Route>
           <Route path="/newOutPut" element={<OutsValue />}></Route>
         </Routes>
-        </userContext.Provider>
+        </UserProvider>
       </BrowserRouter>
     </>
   );

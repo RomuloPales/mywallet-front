@@ -9,16 +9,25 @@ import { Link } from "react-router-dom";
 import { userContext } from "../context/userContext";
 import { useContext, useEffect, useState } from "react";
 import transactionsApi from "../services/transactionsApi";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
   const { user } = useContext(userContext);
   const [transactions, setTransactions] = useState([]);
-  
 
   useEffect(() => {
     getTransactionsList();
   });
-  
+
+  if (!user) {
+    navigate("/");
+  }
+
+  function ClearStorage() {
+    localStorage.clear();
+  }
+
 
   function getTransactionsList() {
     transactionsApi
@@ -63,13 +72,13 @@ export default function Home() {
       <header>
         <h1>Olá, {user.name}</h1>
         <Link to="/">
-          <IonIcon icon={logOutOutline} />
+          <IonIcon icon={logOutOutline} onClick={ClearStorage}></IonIcon>
         </Link>
       </header>
       <TransactionList>
-        {reversedTransactions.map((transaction) => (
+        {reversedTransactions.map((transaction, index) => (
           <ListTransactions
-            key={transaction.id}
+            key={index}
             transaction={transaction.type}
             value={transaction.value}
             date={transaction.createAt}
