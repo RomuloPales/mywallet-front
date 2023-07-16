@@ -14,7 +14,7 @@ export default function UserProvider({ children }) {
     } else {
       navigate("/home");
     }
-  },[]);
+  });
   return (
     <>
       <userContext.Provider value={{ user, setUser }}>
