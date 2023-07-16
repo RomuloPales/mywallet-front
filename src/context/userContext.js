@@ -9,6 +9,7 @@ export default function UserProvider({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const localUser = JSON.parse(localStorage.getItem("user"));
     if (localUser === null) {
       navigate("/");
