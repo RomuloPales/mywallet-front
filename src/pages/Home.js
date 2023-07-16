@@ -15,7 +15,10 @@ export default function Home() {
   const [transactions, setTransactions] = useState([]);
   // const [tipo, setTipo] = useState("entrada");
 
-  useEffect(() => getTransactionsList, []);
+  useEffect(() => {
+    getTransactionsList();
+  });
+  
 
   function getTransactionsList() {
     transactionsApi
